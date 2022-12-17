@@ -19,6 +19,8 @@
 [🤝 Contributors](#contributors)
  
 [📝 Documentation](#documentation)
+
+[Hosting link](#hostinglink)
  
 [🙏 Acknowledgements](#acknowledgements)
 
@@ -35,7 +37,7 @@
 <details>
   <summary>Design</summary>
   <ul>
-    <li><a href="https://www.figma.com/file/sMAp7j0y3UKCjxD4cXOgH9/User-Flow%2FUser-Stories-Alumni_donate?node-id=0%3A1&t=E0GPKtmeAn7Tx4hI-1">Figma Design Link</a></li>
+    <li><a href="https://www.figma.com/file/1ZKDWHvbgCinMSTUWrMqHJ/Low-and-high-Fidelity-Desktop-screens?node-id=0%3A1&t=B3RMpEoEgrT2UuhL-1">Figma Design Link</a></li>
   </ul>
 </details>
 
@@ -210,9 +212,12 @@ Madu Emelie - Backend and Nodejs
 
 # 📝 Documentation <a name="documentation"></a>
 
-A more detailed documentation on the updates and details of this project can be found here - "documentationLinkWhenReady"
+A more detailed documentation about the project can be found here - ["documentationLinkWhenReady"](https://docs.google.com/document/d/1sYlcZdyLXzLgWLW6g8EpZ0ggrH8G9UhCtojt8u3yM0U/edit)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+# Hosting Link <a name="hostinglink"></a>
+https://teambadgerw2.onrender.com/
 
 # 🙏 Acknowledgments <a name="acknowledgements"></a>
 

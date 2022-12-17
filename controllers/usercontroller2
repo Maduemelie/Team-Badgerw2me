@@ -4,22 +4,21 @@ const bcrypt = require("bcrypt");
 //SIGN UP NEW USERS
 const signup = async (req, res) => {
   try {
-    
-      const email=req.body.email
-      const firstName= req.body.firstname
-      const lastName=req.body.lastname
-      const password= req.body.password
-      const dateOfBirth = req.body.dob
-      const gender= req.body.gender
-      const phoneNumber=req.body.phonenumber
-      const yearOfEntry=req.body.yearofadmission.toString()
-      const registrationNumber=req.body.regno.toString()
-      const yearOfGraduation=req.body.yearofgrad.toString()
-      const faculty=req.body.faculty
-      const department=req.body.department
-    
+    const {
+      email,
+      firstName,
+      lastName,
+      password,
+      dateOfBirth,
+      gender,
+      phoneNumber,
+      yearOfEntry,
+      registrationNumber,
+      yearOfGraduation,
+      faculty,
+    } = req.body;
 
-  /*  if (
+    if (
       !(
         email &&
         firstName &&
@@ -35,11 +34,11 @@ const signup = async (req, res) => {
       )
     ) {
       return res.status(400).send("All Input Is Required");
-    }*/
+    }
     const oldUser = await alumni.findOne({ email });
     if (oldUser) {
-      return res.status(409).send("An Alumni Exist");
-      }
+      return res.status(409).send("Alumni Exist, Please Login. ");
+    }
     const hashpassword = await bcrypt.hash(password, 12);
     const newUser = new alumni({
       firstName,
@@ -57,10 +56,9 @@ const signup = async (req, res) => {
 
     const user = await newUser.save();
 
-    //req.flash('success,`You have succesfully registered ${user.firstname}`);
-    res.redirect('dashboard',{user:user})
+    res.status(200).json({ status: "success", user });
   } catch (error) {
-    return res.status(500).send("An Error occurred ");
+    res.status(500).json(error.message);
   }
 };
 
@@ -71,23 +69,20 @@ const login = async (req, res) => {
       const user = await alumni.findOne({ email: req.body.email });
   
       if (!user) {
-         return res.status(400).send("Invalid Details");
+        return res.status(400).json("Wrong Details, Try Again");
       }
   
       const match = await bcrypt.compare(req.body.password, user.password);
   
       if (!match) {
-     
-        return res.status(409).send("Invalid Password Try Again");
+        return res.status(400).json("Wrong password, Try Again");
       }
   
       const { password, ...others } = user._doc;
-      
-      res.redirect('dashboard',{user:user});
+      res.status(200).json({ others});
     } catch (error) {
-      return res.status(500).send("An error occurred");
-      }
-    };
-  
+      res.status(500).json(error.message);
+    }
+  };
 
   module.exports = {signup, login}

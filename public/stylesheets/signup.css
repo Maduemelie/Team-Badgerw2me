@@ -191,8 +191,7 @@ select{
   border-color: #000000;
 }
 
-.submit{
-  float: left;
+.submit-button{
   border: none;
   border-radius: 9px;
   font-size: 15px;
@@ -212,6 +211,6 @@ select{
  
 }
 
-.submit:hover{
+.submit-button:hover{
   background-color: #092C4C;
 }
