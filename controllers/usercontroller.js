@@ -38,7 +38,10 @@ const signup = async (req, res) => {
     }*/
     const oldUser = await alumni.findOne({ email });
     if (oldUser) {
-      return res.status(409).send("An Alumni Exist");
+      return res.render('signup', {
+        message:" ",
+        error: "An Alumni exist"
+      });
       }
     const hashpassword = await bcrypt.hash(password, 12);
     const newUser = new alumni({
@@ -57,10 +60,14 @@ const signup = async (req, res) => {
 
     const user = await newUser.save();
 
-    //req.flash('success,`You have succesfully registered ${user.firstname}`);
-    res.redirect('dashboard',{user:user})
+   res.render('login', {
+      message:"You have Succesfully Registered "
+    })
   } catch (error) {
-    return res.status(500).send("An Error occurred ");
+    return res.render('signup', {
+      message: " ",
+      error: error
+    });
   }
 };
 
@@ -71,21 +78,34 @@ const login = async (req, res) => {
       const user = await alumni.findOne({ email: req.body.email });
   
       if (!user) {
-         return res.status(400).send("Invalid Details");
+         return res.render('login', {
+        message: " ",
+        error: "Invalid Email"
+      });
       }
   
       const match = await bcrypt.compare(req.body.password, user.password);
   
       if (!match) {
      
-        return res.status(409).send("Invalid Password Try Again");
+        return res.render('login', {
+        message: " ",
+        error: "Invalid Password"
+      });
       }
   
       const { password, ...others } = user._doc;
+      req.session.user = {
+      'id': user.id,
+      'name': user.firstName
+    };
+      res.render('dashboard', {
+        user:user
       
-      res.redirect('dashboard',{user:user});
+
+    });
     } catch (error) {
-      return res.status(500).send("An error occurred");
+      res.render('error', { message: "An error Occured", error: error });
       }
     };
   

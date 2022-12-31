@@ -1,5 +1,6 @@
-
+require('dotenv').config()
 require('./models/model');
+const MONGOOSE_URL = process.env.MONGOOSE_URL
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -7,9 +8,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session= require('express-session');
 const flash=require('connect-flash');
+const mongoStore = require('connect-mongo');
 const connectToDb = require('./dbConnect');
-
-
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
@@ -25,13 +25,18 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret:'teambadgerw2',
-                 saveUninitialized: true,
-                   resave: true
-}));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'teambadgerw2',
+  saveUninitialized: false,
+  resave: false,
+  store: mongoStore.create({
+    mongoUrl: MONGOOSE_URL,
+    touchAfter: 24 * 3600
+  })
 
+}));
 app.use('/', indexRouter);
 app.use('/', authRouter);
 
@@ -50,6 +55,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 connectToDb()
 
 app.listen(PORT, ()=>{

@@ -103,7 +103,7 @@ top: -1px; */
 
 
 .hero-image {
-  background-image: url(/public/images/hero-big.svg);
+  background-image: url("/images/hero-big.svg");
   background-repeat: no-repeat;
   background-size: cover;
   box-shadow: 0 3000px rgba(0, 0, 0, 0.5) inset;
@@ -179,7 +179,10 @@ border: 1px solid rgba(0, 0, 0, 0.19);
   border: none;
   font-size: 1.2rem;
 }
-
+.container{
+width:95%;
+  margin:10px auto;
+}
 .user {
   display:flex;
   justify-content: space-between;
